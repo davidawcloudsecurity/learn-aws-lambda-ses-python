@@ -1,7 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
 import re
-from datetime import date
+from datetime import datetime
 
 def lambda_handler(event, context):
     # Initialize S3 and SES clients
@@ -19,12 +19,10 @@ def lambda_handler(event, context):
             'statusCode': 500,
             'body': f"Error fetching objects from S3 bucket: {e}"
         }
-
-    # Get today's date in the format yyyy-mm-dd
-    today_date = date.date.strftime("%B %d, %Y")
-
-    print("Today's date only:", today_date)
     
+    today = datetime.today()
+    d2 = today.strftime("%d %B %Y")
+
     # Extract dates from object keys
     dates = []
     for obj in response.get('Contents', []):
@@ -33,7 +31,7 @@ def lambda_handler(event, context):
         if match:
             date_str = match.group(1)
             try:
-                date = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+                date = datetime.strptime(date_str, '%Y-%m-%d').date()
                 dates.append(date)
             except ValueError:
                 continue
