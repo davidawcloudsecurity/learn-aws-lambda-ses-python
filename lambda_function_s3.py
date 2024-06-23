@@ -9,7 +9,7 @@ def lambda_handler(event, context):
     ses_client = boto3.client('ses', region_name='us-east-1')
 
     # S3 bucket and file details
-    BUCKET_NAME = 'metric-test-01'
+    BUCKET_NAME = 'metric'
 
     # List objects in the specified S3 bucket
     try:
@@ -59,8 +59,8 @@ def lambda_handler(event, context):
     
 
     # Email details
-    SENDER = "foabdavid@gmail.com"
-    RECIPIENT = "foabdavid@gmail.com"
+    SENDER = "test@example.com"
+    RECIPIENT = "test@example.com"
     SUBJECT = f"AWS Lambda Test Email with Extracted Number {d2}"
     BODY_TEXT = f"Amazon SES Test (Python)\r\nExtracted number: {latest_number}"
     BODY_HTML = f"""<html>
