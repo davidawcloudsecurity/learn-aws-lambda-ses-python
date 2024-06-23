@@ -1,6 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
 import re
+from datetime import date
 
 def lambda_handler(event, context):
     # Initialize S3 and SES clients
@@ -9,20 +10,61 @@ def lambda_handler(event, context):
 
     # S3 bucket and file details
     BUCKET_NAME = 'metric-test-01'
-    FILE_KEY = '2024-06-23/backend-to-rse_23.csv'
 
-    # Extract the substring (assuming the pattern is consistent)
-    match = re.search(r'rse_(\d+)', FILE_KEY)
-    if match:
-        extracted_number = match.group(1)
+    # List objects in the specified S3 bucket
+    try:
+        response = s3_client.list_objects_v2(Bucket=BUCKET_NAME)
+    except ClientError as e:
+        return {
+            'statusCode': 500,
+            'body': f"Error fetching objects from S3 bucket: {e}"
+        }
+
+    # Get today's date in the format yyyy-mm-dd
+    today_date = date.date.strftime("%B %d, %Y")
+
+    print("Today's date only:", today_date)
+    
+    # Extract dates from object keys
+    dates = []
+    for obj in response.get('Contents', []):
+        file_key = obj['Key']
+        match = re.search(r'(\d{4}-\d{2}-\d{2})/', file_key)
+        if match:
+            date_str = match.group(1)
+            try:
+                date = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+                dates.append(date)
+            except ValueError:
+                continue
+
+    # Extract numbers from filenames
+    extracted_numbers = []
+    for obj in response.get('Contents', []):
+        file_key = obj['Key']
+        match = re.search(r'backend-to-rse_(\d+)\.csv', file_key)
+        if match:
+            number = int(match.group(1))
+            extracted_numbers.append(number)
+
+    # Find the latest date
+    if dates:
+        latest_date = max(dates)
+        latest_date_str = latest_date.strftime('%Y-%m-%d')
+        latest_number = max(extracted_numbers)
+        FILE_KEY = f"{latest_date_str}/backend-to-rse_{latest_number}.csv"
     else:
-        extracted_number = 'N/A'
+        return {
+            'statusCode': 404,
+            'body': "No objects found in the specified format"
+        }
+    
 
     # Email details
     SENDER = "foabdavid@gmail.com"
     RECIPIENT = "foabdavid@gmail.com"
-    SUBJECT = f"AWS Lambda Test Email with Extracted Number {extracted_number}"
-    BODY_TEXT = f"Amazon SES Test (Python)\r\nExtracted number: {extracted_number}"
+    SUBJECT = f"AWS Lambda Test Email with Extracted Number {d2}"
+    BODY_TEXT = f"Amazon SES Test (Python)\r\nExtracted number: {latest_number}"
     BODY_HTML = f"""<html>
     <head></head>
     <body>
@@ -56,7 +98,7 @@ def lambda_handler(event, context):
         </td>
         <td width="89" valign="top" style="width:66.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt">
         <p align="center" style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center">
-        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">{extracted_number}</span></p>
+        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">{latest_number}</span></p>
         </td>
         </tr>
         <tr>
