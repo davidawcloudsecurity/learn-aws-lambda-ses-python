@@ -92,7 +92,7 @@ def lambda_handler(event, context):
         <tr>
         <td width="198" valign="top" style="width:148.8pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt">
         <p style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in">
-        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">tps / devices_to_back</span></p>
+        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">pps / devices_to_back</span></p>
         </td>
         <td width="89" valign="top" style="width:66.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt">
         <p align="center" style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center">
@@ -102,7 +102,7 @@ def lambda_handler(event, context):
         <tr>
         <td width="198" valign="top" style="width:148.8pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt">
         <p style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in">
-        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">tps / back_to_o</span></p>
+        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">pps / back_to_o</span></p>
         </td>
         <td width="89" valign="top" style="width:66.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt">
         <p align="center" style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center">
@@ -112,7 +112,7 @@ def lambda_handler(event, context):
         <tr>
         <td width="198" valign="top" style="width:148.8pt;border:solid windowtext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt">
         <p style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in">
-        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">tps / back_to_r</span></p>
+        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">pps / back_to_r</span></p>
         </td>
         <td width="89" valign="top" style="width:66.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt">
         <p align="center" style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center">
