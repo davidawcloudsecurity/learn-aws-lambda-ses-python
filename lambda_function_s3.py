@@ -64,7 +64,7 @@ def lambda_handler(event, context):
 
     # Find the highest number in the latest date folder
     if extracted_numbers:
-        print(f"Latest Date: {latest_date_str}, Latest Number: {latest_number}, FILE_KEY: {FILE_KEY}")
+        print(f"Latest Date: {latest_date_str}, Latest Number: {extracted_numbers}, FILE_KEY: {file_key}")
     else:
         return {
             'statusCode': 404,
@@ -73,10 +73,10 @@ def lambda_handler(event, context):
     
 
     # Email details
-    SENDER = "foabdavid@gmail.com"
-    RECIPIENT = "foabdavid@gmail.com"
+    SENDER = "test@example.com"
+    RECIPIENT = "test@example.com"
     SUBJECT = f"AWS Lambda Test Email with Extracted Number {d2}"
-    BODY_TEXT = f"Amazon SES Test (Python)\r\nExtracted number: {latest_number}"
+    BODY_TEXT = f"Amazon SES Test (Python)\r\nExtracted number: {extracted_numbers}"
     BODY_HTML = f"""<html>
     <head></head>
     <body>
@@ -110,7 +110,7 @@ def lambda_handler(event, context):
         </td>
         <td width="89" valign="top" style="width:66.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt">
         <p align="center" style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center">
-        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">{latest_number}</span></p>
+        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">{extracted_numbers}</span></p>
         </td>
         </tr>
         <tr>
