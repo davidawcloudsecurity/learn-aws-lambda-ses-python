@@ -1,7 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def lambda_handler(event, context):
     # Initialize S3 and SES clients
@@ -9,7 +9,7 @@ def lambda_handler(event, context):
     ses_client = boto3.client('ses', region_name='us-east-1')
 
     # S3 bucket and file details
-    BUCKET_NAME = 'metric'
+    BUCKET_NAME = 'metric-test-01'
 
     # List objects in the specified S3 bucket
     try:
@@ -19,48 +19,62 @@ def lambda_handler(event, context):
             'statusCode': 500,
             'body': f"Error fetching objects from S3 bucket: {e}"
         }
-    
+        
+    # Get today's date
     today = datetime.today()
+    # Subtract one day
+    yesterday = today - timedelta(days=1)
     d2 = today.strftime("%d %B %Y")
+    latest_date_str = yesterday.strftime('%Y-%-m-%d')
+    print(f"Today's date: {d2}")
+    print(f"Yesterday's date: {latest_date_str}")
+    
+    # Formulate the folder key for the latest date
+    folder_prefix = latest_date_str + '/'
+    print(f"Searching for files in folder: {folder_prefix}")
+    
+    # Example list of patterns
+    patterns = [
+        fr'{re.escape(folder_prefix)}backend_to_obd-(\d+)\.csv',
+        fr'{re.escape(folder_prefix)}backend_to_rse-(\d+)\.csv',
+        fr'{re.escape(folder_prefix)}devices_to_backend-(\d+)\.csv'
+    ]
 
-    # Extract dates from object keys
-    dates = []
-    for obj in response.get('Contents', []):
-        file_key = obj['Key']
-        match = re.search(r'(\d{4}-\d{2}-\d{2})/', file_key)
-        if match:
-            date_str = match.group(1)
-            try:
-                date = datetime.strptime(date_str, '%Y-%m-%d').date()
-                dates.append(date)
-            except ValueError:
-                continue
-
-    # Extract numbers from filenames
+    # Extract numbers from filenames in the latest date folder
+    matched_files = []
     extracted_numbers = []
     for obj in response.get('Contents', []):
         file_key = obj['Key']
-        match = re.search(r'backend-to-rse_(\d+)\.csv', file_key)
-        if match:
-            number = int(match.group(1))
-            extracted_numbers.append(number)
+        print(f"file_key: {file_key}")
+        # Check against each pattern
+        for pattern in patterns:
+            match = re.search(pattern, file_key)
+            if match:
+                print(f"Match found with pattern '{pattern}': {match.group(0)}")
+                number = int(match.group(1))
+                extracted_numbers.append(number)
+                matched_files.append(match.group(0))
+                break
+    
+    # Print matched files
+    print("Matched files:")
+    for matched_file in matched_files:
+        print(matched_file)
+        print(extracted_numbers)
 
-    # Find the latest date
-    if dates:
-        latest_date = max(dates)
-        latest_date_str = latest_date.strftime('%Y-%m-%d')
-        latest_number = max(extracted_numbers)
-        FILE_KEY = f"{latest_date_str}/backend-to-rse_{latest_number}.csv"
+    # Find the highest number in the latest date folder
+    if extracted_numbers:
+        print(f"Latest Date: {latest_date_str}, Latest Number: {latest_number}, FILE_KEY: {FILE_KEY}")
     else:
         return {
             'statusCode': 404,
-            'body': "No objects found in the specified format"
+            'body': f"No files found in folder: {folder_prefix}"
         }
     
 
     # Email details
-    SENDER = "test@example.com"
-    RECIPIENT = "test@example.com"
+    SENDER = "foabdavid@gmail.com"
+    RECIPIENT = "foabdavid@gmail.com"
     SUBJECT = f"AWS Lambda Test Email with Extracted Number {d2}"
     BODY_TEXT = f"Amazon SES Test (Python)\r\nExtracted number: {latest_number}"
     BODY_HTML = f"""<html>
