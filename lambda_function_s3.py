@@ -129,7 +129,7 @@ def lambda_handler(event, context):
         </td>
         <td width="89" valign="top" style="width:66.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt">
         <p align="center" style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center">
-        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">{extracted_numbers}</span></p>
+        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">{number3}</span></p>
         </td>
         </tr>
         <tr>
@@ -139,7 +139,7 @@ def lambda_handler(event, context):
         </td>
         <td width="89" valign="top" style="width:66.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt">
         <p align="center" style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center">
-        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">1</span></p>
+        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">{number2}</span></p>
         </td>
         </tr>
         <tr>
@@ -149,7 +149,7 @@ def lambda_handler(event, context):
         </td>
         <td width="89" valign="top" style="width:66.75pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt">
         <p align="center" style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center">
-        0</p>
+        <span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">{number1}</span></p>
         </td>
         </tr>
         </tbody>
