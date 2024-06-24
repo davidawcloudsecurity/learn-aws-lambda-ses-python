@@ -159,7 +159,7 @@ def lambda_handler(event, context):
         <tbody>
         <tr>
         <td width="318" colspan="2" valign="top" style="width:238.25pt;border:solid windowtext 1.0pt;background:#bfbfbf;padding:0in 5.4pt 0in 5.4pt;height:25.15pt">
-        <p style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in">
+        <p style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center"">
         <b><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:black">Count of S related Incident/Service Request</span></b></p>
         <p align="center" style="margin-right:0in;margin-left:0in;font-size:12pt;font-family:Aptos,sans-serif;margin:0in;text-align:center">
         <b><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:black">&nbsp;</span></b></p>
