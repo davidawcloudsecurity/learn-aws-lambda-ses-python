@@ -24,9 +24,9 @@ def lambda_handler(event, context):
     today = datetime.today()
     # Subtract one day
     yesterday = today - timedelta(days=1)
-    d2 = today.strftime("%d %B %Y")
+    todays_date = today.strftime("%d %B %Y")
     latest_date_str = yesterday.strftime('%Y-%-m-%d')
-    print(f"Today's date: {d2}")
+    print(f"Today's date: {todays_date}")
     print(f"Yesterday's date: {latest_date_str}")
     
     # Formulate the folder key for the latest date
@@ -56,11 +56,30 @@ def lambda_handler(event, context):
                 matched_files.append(match.group(0))
                 break
     
-    # Print matched files
     print("Matched files:")
     for matched_file in matched_files:
         print(matched_file)
-        print(extracted_numbers)
+        # Check if 'backend_to_rse' is in the matched file key
+        if 'backend_to_rse' in matched_file:
+            # Perform the regex search within the matched_file
+            match = re.search(r'backend_to_rse-(\d+)\.csv', matched_file)
+            if match:
+                number1 = int(match.group(1))
+                print(f"Matched 'backend_to_rse' number: {number1}")
+        elif 'backend_to_obd' in matched_file:
+            # Perform the regex search within the matched_file for 'backend_to_obd'
+            match = re.search(r'backend_to_obd-(\d+)\.csv', matched_file)
+            if match:
+                number2 = int(match.group(1))
+                print(f"Matched 'backend_to_obd' number: {number2}")
+        elif 'devices_to_backend' in matched_file:
+            # Perform the regex search within the matched_file for 'devices_to_backend'
+            match = re.search(r'devices_to_backend-(\d+)\.csv', matched_file)
+            if match:
+                number3 = int(match.group(1))
+                print(f"Matched 'devices_to_backend' number: {number3}")
+        else:
+            print(f"No match found in '{matched_file}'")
 
     # Find the highest number in the latest date folder
     if extracted_numbers:
@@ -73,9 +92,9 @@ def lambda_handler(event, context):
     
 
     # Email details
-    SENDER = "test@example.com"
-    RECIPIENT = "test@example.com"
-    SUBJECT = f"AWS Lambda Test Email with Extracted Number {d2}"
+    SENDER = "foabdavid@gmail.com"
+    RECIPIENT = "foabdavid@gmail.com"
+    SUBJECT = f"AWS Lambda Test Email {todays_date}"
     BODY_TEXT = f"Amazon SES Test (Python)\r\nExtracted number: {extracted_numbers}"
     BODY_HTML = f"""<html>
     <head></head>
