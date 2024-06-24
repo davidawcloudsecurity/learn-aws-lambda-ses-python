@@ -92,8 +92,8 @@ def lambda_handler(event, context):
     
 
     # Email details
-    SENDER = "foabdavid@gmail.com"
-    RECIPIENT = "foabdavid@gmail.com"
+    SENDER = "test@example.com"
+    RECIPIENT = "test@example.com"
     SUBJECT = f"AWS Lambda Test Email {todays_date}"
     BODY_TEXT = f"Amazon SES Test (Python)\r\nExtracted number: {extracted_numbers}"
     BODY_HTML = f"""<html>
